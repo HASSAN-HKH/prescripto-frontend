@@ -5,8 +5,54 @@
   --font-display: "Outfit", sans-serif;
   --color-primary: #5f6fff;
   --color-secondary: rgb(94 94 94);
+  --container-max-w-sm: 640px;
+  --container-max-w-md: 768px;
+  --container-max-w-lg: 1024px;
+  --container-max-w-xl: 1280px;
+  --container-max-w-2xl: 1536px;
+  --container-padding-default: 1rem;
+  --container-padding-sm: 1.5rem;
+  --container-padding-lg: 2rem;
 }
 
 body {
   font-family: var(--font-display);
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding-default);
+  padding-right: var(--container-padding-default);
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: var(--container-max-w-sm);
+    padding-left: var(--container-padding-sm);
+    padding-right: var(--container-padding-sm);
+  }
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: var(--container-max-w-md);
+  }
+}
+@media (min-width: 1024px) {
+  .container {
+    max-width: var(--container-max-w-lg);
+    padding-left: var(--container-padding-lg);
+    padding-right: var(--container-padding-lg);
+  }
+}
+@media (min-width: 1280px) {
+  .container {
+    max-width: var(--container-max-w-xl);
+  }
+}
+@media (min-width: 1536px) {
+  .container {
+    max-width: var(--container-max-w-2xl);
+  }
 }

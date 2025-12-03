@@ -12,7 +12,7 @@ import Admin from "./pages/Admin";
 
 const App = () => {
   return (
-    <div className="container mx-auto ">
+    <div className="mx-4 sm:mx-[10%]">
       <Router>
         <Header />
         <Routes>
