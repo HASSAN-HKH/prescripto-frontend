@@ -4,11 +4,15 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div>
-      <div className="company-info flex flex-col justify-between text-(--color-secondary) text-sm md:flex-row gap-2 md:gap-0 mt-40">
-        <div className="md:basis-md ">
+    <div className="text-center lg:text-left">
+      <div className="company-info flex flex-col justify-center lg:justify-between text-(--color-secondary) text-sm lg:flex-row gap-6 lg:gap-2 mt-40">
+        <div className="lg:basis-md">
           <div className="logo">
-            <img src={logo} alt="Logo" className="w-44 cursor-pointer mb-5" />
+            <img
+              src={logo}
+              alt="Logo"
+              className="w-44 cursor-pointer mb-5 mx-auto lg:mx-0"
+            />
           </div>
           <p className="w-full leading-6">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel ex

@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../assets/logo.svg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/authStore";
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { NavContext } from "../context/NavContext";
 
 const Header = () => {
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuthStore();
+  const { open, setOpen, visible, setVisible } = useContext(NavContext);
+
+  console.log(open);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+    setVisible(true);
   };
 
   return (
@@ -18,7 +28,10 @@ const Header = () => {
       <div className="logo" onClick={() => navigate("/")}>
         <img src={logo} alt="Logo" className="w-44 cursor-pointer" />
       </div>
-      <nav className="flex gap-5 font-medium uppercase items-center">
+      <button className="p-2 lg:hidden" onClick={handleOpen}>
+        <HiOutlineMenuAlt3 className="w-8 h-8" />
+      </button>
+      <nav className="lg:flex gap-5 font-medium uppercase items-center hidden">
         <Link to="/">Home</Link>
         <Link to="/doctors">ALL Doctors</Link>
         <Link to="/about">About</Link>
@@ -31,7 +44,7 @@ const Header = () => {
         </Link>
       </nav>
       {!isAuthenticated && (
-        <div className="createAccount">
+        <div className="createAccount hidden lg:block">
           <Link
             to="/register"
             className="bg-(--color-primary) text-white px-8 py-3 rounded-full font-light"
