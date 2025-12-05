@@ -37,8 +37,9 @@ const Header = () => {
         <Link to="/about">About</Link>
         <Link to="/contact">Contact</Link>
         <Link
-          to="/admin"
+          to="/admin/login"
           className="px-5 normal-case font-normal border rounded-2xl py-1 border-[#e5e7eb]"
+          target="_blank"
         >
           Admin Panel
         </Link>

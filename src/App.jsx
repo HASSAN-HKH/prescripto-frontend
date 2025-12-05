@@ -8,10 +8,15 @@ import Footer from "./components/Footer";
 import AllDoctors from "./pages/AllDoctors";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Admin from "./pages/Admin";
 import { NavContext } from "./context/NavContext";
 import logo from "./assets/logo.svg";
 import { HiOutlineX } from "react-icons/hi";
+import AdminLogin from "./pages/Admin/AdminLogin";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import DoctorLogin from "./pages/Doctor/DoctorLogin";
+import DoctorDashboard from "./pages/Doctor/DoctorDashboard";
+import PublicLayout from "./layout/PublicLayout";
+import PanelLayout from "./layout/PanelLayout";
 
 const App = () => {
   const { open, setOpen, visible, setVisible } = useContext(NavContext);
@@ -63,17 +68,88 @@ const App = () => {
             </nav>
           </div>
         )}
-        <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/doctors" element={<AllDoctors />} />
+          <Route
+            path="/"
+            element={
+              <PublicLayout>
+                <Home />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <PublicLayout>
+                <Login />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <PublicLayout>
+                <About />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <PublicLayout>
+                <Contact />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicLayout>
+                <Register />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/doctors"
+            element={
+              <PublicLayout>
+                <AllDoctors />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/admin/login"
+            element={
+              <PanelLayout>
+                <AdminLogin />
+              </PanelLayout>
+            }
+          />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <PanelLayout>
+                <AdminDashboard />
+              </PanelLayout>
+            }
+          />
+          <Route
+            path="/doctor/login"
+            element={
+              <PanelLayout>
+                <DoctorLogin />
+              </PanelLayout>
+            }
+          />
+          <Route
+            path="/doctor/dashboard"
+            element={
+              <PanelLayout>
+                <DoctorDashboard />
+              </PanelLayout>
+            }
+          />
         </Routes>
-        <Footer />
       </Router>
     </div>
   );
