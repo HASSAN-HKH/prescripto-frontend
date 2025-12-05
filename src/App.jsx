@@ -29,7 +29,7 @@ const App = () => {
   };
 
   return (
-    <div className="mx-4 sm:mx-[10%]">
+    
       <Router>
         {visible && (
           <div
@@ -59,7 +59,8 @@ const App = () => {
                 Contact
               </Link>
               <Link
-                to="/admin"
+                to="/admin/login"
+                target="_blank"
                 className="px-5 normal-case font-normal border rounded-2xl py-1 border-[#e5e7eb]"
                 onClick={handleClose}
               >
@@ -151,7 +152,6 @@ const App = () => {
           />
         </Routes>
       </Router>
-    </div>
   );
 };
 

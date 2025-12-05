@@ -5,9 +5,11 @@ import Footer from "../components/Footer";
 const PublicLayout = ({ children }) => {
   return (
     <>
-      <Header />
-      <main>{children}</main>
-      <Footer />
+      <div className="mx-4 sm:mx-[10%]">
+        <Header />
+        {children}
+        <Footer />
+      </div>
     </>
   );
 };
