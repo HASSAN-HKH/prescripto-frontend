@@ -23,6 +23,7 @@ import AdminAddDoctor from "./pages/Admin/AdminAddDoctor";
 import AdminDoctorsList from "./pages/Admin/AdminDoctorsList";
 import DoctorAppointments from "./pages/Doctor/DoctorAppointments";
 import DoctorProfile from "./pages/Doctor/DoctorProfile";
+import ProtectedPages from "./pages/ProtectedPages";
 
 const App = () => {
   const { open, setOpen, visible, setVisible } = useContext(NavContext);
@@ -142,9 +143,11 @@ const App = () => {
         <Route
           path="/admin"
           element={
-            <PanelLayout>
-              <DashboardLayout page="admin" />
-            </PanelLayout>
+            <ProtectedPages>
+              <PanelLayout>
+                <DashboardLayout page="admin" />
+              </PanelLayout>
+            </ProtectedPages>
           }
         >
           <Route path="dashboard" element={<AdminDashboard />} />
