@@ -1,63 +1,115 @@
-import React from "react";
-import admin_logo from "../../assets/admin_logo.svg";
-import { Link } from "react-router-dom";
-import add_icon from "../../assets/add_icon.svg";
-import appointment_icon from "../../assets/appointment_icon.svg";
-import people_icon from "../../assets/people_icon.svg";
-import home_icon from "../../assets/home_icon.svg";
+import React, { useState } from "react";
+import doctor_icon from "../../assets/doctor_icon.svg";
+import appointments_icon from "../../assets/appointments_icon.svg";
+import patients_icon from "../../assets/patients_icon.svg";
+import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
+import adminApi from "../../api/adminApi";
+import { useEffect } from "react";
 
 const AdminDashboard = () => {
+  const date = new Date();
+  const [book, setBook] = useState({});
+
+  const handleTaskComplete = (id) => {
+    setBook({ ...book, [id]: "complete" });
+  };
+
+  const handleTaskCancelled = (id) => {
+    setBook({ ...book, [id]: "cancel" });
+  };
+
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      try {
+        const res = await adminApi.get("/admin/dashboard");
+        alert(res.data.message);
+      } catch (error) {
+        alert(error.response?.data?.message || "Fetch failed");
+      }
+    };
+
+    fetchDashboard();
+  }, []);
+
   return (
-    <div className="admin-dashboard">
-      <div className="flex justify-between items-center py-4 mb-px shadow-[0px_1px_2px_0px_#80808054] text-sm border-(--color-secondary px-6">
-        <div className="logo" onClick={() => navigate("/")}>
-          <img src={admin_logo} alt="Logo" className="w-44 cursor-pointer" />
+    <div className="admin-dash">
+      <div className="stats flex gap-8">
+        <div className="doctors flex basis-56 flex-col items-center bg-white p-4">
+          <img src={doctor_icon} alt="Image" />
+          <p className="py-1">{15} Doctors</p>
         </div>
-        <div className="logout">
-          <button className="bg-(--color-primary) text-white px-10 py-3 rounded-full font-medium text-[16px] cursor-pointer">
-            Logout
-          </button>
+        <div className="appointments flex basis-56 flex-col items-center bg-white p-4">
+          <img src={appointments_icon} alt="Image" />
+          <p className="py-1">{6} Appointments</p>
+        </div>
+        <div className="patients flex basis-56 flex-col items-center bg-white p-4">
+          <img src={patients_icon} alt="Image" />
+          <p className="py-1">{6} Patients</p>
         </div>
       </div>
-      <main className=" flex min-h-screen">
-        <aside className="bg-white flex-2/12 pt-4 ">
-          <nav className="flex flex-col gap-0.5 font-medium">
-            <Link
-              to="/doctors"
-              className="flex gap-2 py-3 pl-6 hover:bg-[#5f6fff2b] hover:border-r-3 hover:border-(--color-primary) transition-[background-color] duration-150"
-            >
-              <img src={home_icon} alt="Icon" />
-              Dashboard
-            </Link>
-
-            <Link
-              to="/doctors"
-              className="flex gap-2 py-3 pl-6 hover:bg-[#5f6fff2b] hover:border-r-3 hover:border-(--color-primary) transition-[background-color] duration-150"
-            >
-              <img src={appointment_icon} alt="Icon" />
-              Appointments
-            </Link>
-
-            <Link
-              to="/doctors"
-              className="flex gap-2 py-3 pl-6 hover:bg-[#5f6fff2b] hover:border-r-3 hover:border-(--color-primary) transition-[background-color] duration-150"
-            >
-              <img src={add_icon} alt="Icon" />
-              Add Doctor
-            </Link>
-            <Link
-              to="/doctors"
-              className="flex gap-2 py-3 pl-6 hover:bg-[#5f6fff2b] hover:border-r-3 hover:border-(--color-primary) transition-[background-color] duration-150"
-            >
-              <img src={people_icon} alt="Icon" />
-              Doctors List
-            </Link>
-          </nav>
-        </aside>
-        <section className="content flex-10/12 bg-[#f8f9fa] p-4">
-          Content
-        </section>
-      </main>
+      <div className="latest-bookings p-4 bg-white my-8 w-2/3 flex flex-col gap-5">
+        <h2>Latest Bookings</h2>
+        <div className="book flex gap-5 justify-between items-center" id="1">
+          <div className="doctorInfo flex gap-4 items-center">
+            <img src={doctor_icon} alt="Image" />
+            <div>
+              <h3>Doctor's Name 1</h3> <span>{date.toDateString()}</span>
+            </div>
+          </div>
+          {!book[1] && (
+            <div className="buttons flex gap-2.5 items-center">
+              <AiOutlineCheck
+                size={28}
+                color="green"
+                className="cursor-pointer"
+                onClick={() => handleTaskComplete(1)}
+              />
+              <AiOutlineClose
+                size={28}
+                color="red"
+                className="cursor-pointer"
+                onClick={() => handleTaskCancelled(1)}
+              />
+            </div>
+          )}
+          {book[1] === "complete" && (
+            <p className="text-green-500 bold">Completed</p>
+          )}
+          {book[1] === "cancel" && (
+            <p className="text-red-500 bold">Cancelled</p>
+          )}
+        </div>
+        <div className="book flex gap-5 justify-between items-center" id="1">
+          <div className="doctorInfo flex gap-4 items-center">
+            <img src={doctor_icon} alt="Image" />
+            <div>
+              <h3>Doctor's Name 2</h3> <span>{date.toDateString()}</span>
+            </div>
+          </div>
+          {!book[2] && (
+            <div className="buttons flex gap-2.5 items-center">
+              <AiOutlineCheck
+                size={28}
+                color="green"
+                className="cursor-pointer"
+                onClick={() => handleTaskComplete(2)}
+              />
+              <AiOutlineClose
+                size={28}
+                color="red"
+                className="cursor-pointer"
+                onClick={() => handleTaskCancelled(2)}
+              />
+            </div>
+          )}
+          {book[2] === "complete" && (
+            <p className="text-green-500 bold">Completed</p>
+          )}
+          {book[2] === "cancel" && (
+            <p className="text-red-500 bold">Cancelled</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
