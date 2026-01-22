@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import adminApi from "../../api/adminApi";
+import adminApi from "../../api/adminApi"; // because I need to ensure that the admin-token is sent with the request
 import { useEffect } from "react";
 
 const AdminDoctorsList = () => {

@@ -44,7 +44,9 @@ const Header = () => {
           Admin Panel
         </Link>
       </nav>
-      {!isAuthenticated && (
+      {isAuthenticated ? (
+        <button onClick={handleLogout}>Logout</button>
+      ) : (
         <div className="createAccount hidden lg:block">
           <Link
             to="/register"
@@ -54,7 +56,6 @@ const Header = () => {
           </Link>
         </div>
       )}
-      {isAuthenticated && <button onClick={handleLogout}>Logout</button>}
     </div>
   );
 };
