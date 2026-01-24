@@ -143,11 +143,9 @@ const App = () => {
         <Route
           path="/admin"
           element={
-            <ProtectedPages>
-              <PanelLayout>
-                <DashboardLayout page="admin" />
-              </PanelLayout>
-            </ProtectedPages>
+            <PanelLayout>
+              <DashboardLayout page="admin" />
+            </PanelLayout>
           }
         >
           <Route path="dashboard" element={<AdminDashboard />} />

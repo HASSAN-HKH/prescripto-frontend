@@ -10,6 +10,7 @@ import Gynecologist from "../assets/Gynecologist.svg";
 import Neurologist from "../assets/Neurologist.svg";
 import Pediatricians from "../assets/Pediatricians.svg";
 import appointment_img from "../assets/appointment_img.png";
+import { DoctorsMockData } from "../mock/DoctorsData";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -68,6 +69,50 @@ const Home = () => {
               <p className="py-1">{item.name}</p>
             </div>
           ))}
+        </div>
+      </section>
+      <section>
+        <h2 className="text-3xl font-medium text-center pb-2">
+          Top Doctors to Book
+        </h2>
+        <p className="text-center text-sm">
+          Simply browse through our extensive list of trusted doctors.
+        </p>
+        <div className="pb-20 pt-10">
+          <div className="doctors grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 gap-y-6">
+            {DoctorsMockData.map((doctor) => {
+              return (
+                <>
+                  <div
+                    key={doctor.id}
+                    className="group w-full flex flex-col gap-4  border border-[#C9D8FF] rounded-xl cursor-pointer hover:-translate-y-2.5 transition-[translate] duration-400 ease-in-out"
+                  >
+                    <img
+                      src={doctor.profile_image}
+                      alt={doctor.name}
+                      className="w-full mb-2 bg-[#EAEFFF] rounded-t-xl "
+                    />
+                    <div className="doctor-data pb-4 px-3 ">
+                      <p className="text-sm text-[#22c55e] relative before:absolute before:content-[''] before:top-[50%] before:left-0 before:w-2 before:h-2 before:bg-[#22c55e] before:translate-y-[-50%] pl-3 before:rounded-[50%] ">
+                        Available
+                      </p>
+                      <h3 className="text-[#262626] text-lg font-medium">
+                        {doctor.name}
+                      </h3>
+                      <p className="text-[#5C5C5C] text-sm">
+                        {doctor.speciality}
+                      </p>
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+          </div>
+          <div className="more text-center">
+            <button className="bg-[#EAEFFF] text-gray-600 px-12 py-3 rounded-full mt-10 cursor-pointer hover:text-white hover:bg-(--color-primary) transition ease-in-out">
+              more
+            </button>
+          </div>
         </div>
       </section>
       <section
