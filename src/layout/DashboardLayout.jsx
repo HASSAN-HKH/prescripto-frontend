@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import admin_logo from "../assets/admin_logo.svg";
 import { Link } from "react-router-dom";
 import add_icon from "../assets/add_icon.svg";
@@ -8,10 +8,13 @@ import home_icon from "../assets/home_icon.svg";
 import { Outlet } from "react-router-dom";
 import useAuthAdminStore from "../store/authAdminStore";
 import { useNavigate } from "react-router-dom";
+import { HiMenuAlt1 } from "react-icons/hi";
+import { HiOutlineX } from "react-icons/hi";
 
 const DashboardLayout = ({ page }) => {
   const { isAuthenticated, logout } = useAuthAdminStore();
   const navigate = useNavigate();
+  const [visible, setVisible] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -41,11 +44,20 @@ const DashboardLayout = ({ page }) => {
               </div>
             )}
           </div>
-          <main className=" flex min-h-screen">
-            <aside className="bg-white flex-2/12 pt-4 ">
+          <main className={`flex min-h-screen relative`}>
+            <aside
+              className={`bg-white md:w-64 pt-4 transition-[left] ease-in-out duration-300 ${visible ? `left-0 w-full h-full` : `-left-full`} z-2 max-md:absolute md:block`}
+            >
+              {visible && (
+                <HiOutlineX
+                  className="text-3xl mt-2 mb-4 mx-auto md:hidden"
+                  onClick={() => setVisible(false)}
+                />
+              )}
               <nav className="flex flex-col gap-0.5 font-medium">
                 <Link
                   to="/admin/dashboard"
+                  onClick={() => setVisible(false)}
                   className="flex gap-2 py-3 pl-6 hover:bg-[#5f6fff2b] hover:border-r-3 hover:border-(--color-primary) transition-[background-color] duration-150"
                 >
                   <img src={home_icon} alt="Icon" />
@@ -54,6 +66,7 @@ const DashboardLayout = ({ page }) => {
 
                 <Link
                   to="/admin/appointments"
+                  onClick={() => setVisible(false)}
                   className="flex gap-2 py-3 pl-6 hover:bg-[#5f6fff2b] hover:border-r-3 hover:border-(--color-primary) transition-[background-color] duration-150"
                 >
                   <img src={appointment_icon} alt="Icon" />
@@ -62,6 +75,7 @@ const DashboardLayout = ({ page }) => {
 
                 <Link
                   to="/admin/add-doctor"
+                  onClick={() => setVisible(false)}
                   className="flex gap-2 py-3 pl-6 hover:bg-[#5f6fff2b] hover:border-r-3 hover:border-(--color-primary) transition-[background-color] duration-150"
                 >
                   <img src={add_icon} alt="Icon" />
@@ -69,6 +83,7 @@ const DashboardLayout = ({ page }) => {
                 </Link>
                 <Link
                   to="/admin/doctors"
+                  onClick={() => setVisible(false)}
                   className="flex gap-2 py-3 pl-6 hover:bg-[#5f6fff2b] hover:border-r-3 hover:border-(--color-primary) transition-[background-color] duration-150"
                 >
                   <img src={people_icon} alt="Icon" />
@@ -76,7 +91,12 @@ const DashboardLayout = ({ page }) => {
                 </Link>
               </nav>
             </aside>
-            <section className="content flex-10/12 bg-[#f5f4f4ec] p-4">
+            <section className="content flex-1 bg-[#f5f4f4ec] p-4">
+              <HiMenuAlt1
+                className="text-3xl mt-2 mb-4 md:hidden"
+                onClick={() => setVisible(true)}
+              />
+
               <Outlet />
             </section>
           </main>

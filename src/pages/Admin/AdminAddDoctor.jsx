@@ -51,7 +51,9 @@ const AdminAddDoctor = () => {
 
   return (
     <div className="add-doctor">
-      <h2 className="text-2xl font-semibold mb-6">Add Doctor</h2>
+      <h2 className="text-2xl font-semibold mb-6 hidden md:block">
+        Add Doctor
+      </h2>
 
       <div className="bg-white p-8 rounded-xl shadow-sm w-full lg:w-[80%]">
         <form

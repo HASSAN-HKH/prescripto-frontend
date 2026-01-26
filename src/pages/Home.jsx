@@ -86,6 +86,7 @@ const Home = () => {
                   <div
                     key={doctor.id}
                     className="group w-full flex flex-col gap-4  border border-[#C9D8FF] rounded-xl cursor-pointer hover:-translate-y-2.5 transition-[translate] duration-400 ease-in-out"
+                    onClick={() => navigate(`/doctors/${doctor.id}`)}
                   >
                     <img
                       src={doctor.profile_image}
@@ -93,7 +94,7 @@ const Home = () => {
                       className="w-full mb-2 bg-[#EAEFFF] rounded-t-xl "
                     />
                     <div className="doctor-data pb-4 px-3 ">
-                      <p className="text-sm text-[#22c55e] relative before:absolute before:content-[''] before:top-[50%] before:left-0 before:w-2 before:h-2 before:bg-[#22c55e] before:translate-y-[-50%] pl-3 before:rounded-[50%] ">
+                      <p className="-z-10 text-sm text-[#22c55e] relative before:absolute before:content-[''] before:top-[50%] before:left-0 before:w-2 before:h-2 before:bg-[#22c55e] before:translate-y-[-50%] pl-3 before:rounded-[50%] ">
                         Available
                       </p>
                       <h3 className="text-[#262626] text-lg font-medium">
@@ -109,7 +110,10 @@ const Home = () => {
             })}
           </div>
           <div className="more text-center">
-            <button className="bg-[#EAEFFF] text-gray-600 px-12 py-3 rounded-full mt-10 cursor-pointer hover:text-white hover:bg-(--color-primary) transition ease-in-out">
+            <button
+              className="bg-[#EAEFFF] text-gray-600 px-12 py-3 rounded-full mt-10 cursor-pointer hover:text-white hover:bg-(--color-primary) transition ease-in-out"
+              onClick={() => navigate("/doctors")}
+            >
               more
             </button>
           </div>

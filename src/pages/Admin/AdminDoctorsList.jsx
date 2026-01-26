@@ -22,7 +22,7 @@ const AdminDoctorsList = () => {
   }, []);
   return (
     <div>
-      <h2 className="mb-4 font-semibold">All Doctors</h2>
+      <h2 className="mb-4 font-semibold hidden md:block">All Doctors</h2>
       {mockData.length === 0 && <p>No doctors found</p>}
 
       <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 gap-y-6 px-3 sm:px-0">

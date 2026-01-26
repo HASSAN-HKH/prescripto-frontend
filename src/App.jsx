@@ -24,6 +24,7 @@ import AdminDoctorsList from "./pages/Admin/AdminDoctorsList";
 import DoctorAppointments from "./pages/Doctor/DoctorAppointments";
 import DoctorProfile from "./pages/Doctor/DoctorProfile";
 import ProtectedPages from "./pages/ProtectedPages";
+import DoctorPage from "./pages/DoctorPage";
 
 const App = () => {
   const { open, setOpen, visible, setVisible } = useContext(NavContext);
@@ -123,7 +124,7 @@ const App = () => {
               <AllDoctors />
             </PublicLayout>
           }
-        />
+        ></Route>
         <Route
           path="/admin"
           element={
@@ -171,6 +172,14 @@ const App = () => {
             <PanelLayout>
               <DoctorLogin />
             </PanelLayout>
+          }
+        />
+        <Route
+          path="doctors/:doctorId"
+          element={
+            <PublicLayout>
+              <DoctorPage />
+            </PublicLayout>
           }
         />
       </Routes>
