@@ -151,7 +151,7 @@ const AdminAddDoctor = () => {
               <option value="General Physician">General Physician</option>
               <option value="Gynecologist">Gynecologist</option>
               <option value="Dermatologist">Dermatologist</option>
-              <option value="pediatrician">pediatrician</option>
+              <option value="Pediatrician">Pediatrician</option>
               <option value="Neurologist">Neurologist</option>
               <option value="Gastroenterologist">Gastroenterologist</option>
             </select>

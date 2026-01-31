@@ -1,9 +1,10 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import { DoctorsMockData } from "../mock/DoctorsData";
 import verify from "../assets/verify.svg";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
+import useDoctorsStore from "../store/doctors";
+import { useEffect } from "react";
 
 const getNextDays = (count = 7) => {
   const days = [];
@@ -30,40 +31,56 @@ const DoctorPage = () => {
 
   const { doctorId } = useParams();
 
-  const doctor = DoctorsMockData.find((doc) => doc.id === Number(doctorId));
+  const fetchDoctors = useDoctorsStore((state) => state.fetchDoctors);
+  const { doctors, loading } = useDoctorsStore();
+
+  useEffect(() => {
+    if (doctors.length === 0) {
+      fetchDoctors();
+    }
+  }, [doctors.length, fetchDoctors]);
+
+  const doctor = doctors.find((doc) => doc.id === Number(doctorId));
+
+  const filteredDoctors = doctors.filter((doc) => {
+    return doc.speciality === doctor.speciality && doc.id !== doctor.id;
+  });
 
   return (
     <>
       <div className="doctorInfo">
-        <section className="info flex flex-col md:flex-row md:gap-4">
-          <div className="image">
-            <img
-              src={doctor.profile_image}
-              alt="Image"
-              className="bg-(--color-primary) rounded-2xl w-full"
-            />
-          </div>
-          <div className="details w-[98%] bg-white border border-[#ADADAD] p-8 mx-auto rounded-2xl -mt-14 md:mt-0">
-            <h2 className="text-3xl font-medium text-gray-700 flex gap-2.5">
-              {doctor.name}
-              <img src={verify} alt="Image" className="w-5" />
-            </h2>
-            <p className="text-gray-600 flex gap-2.5 mt-1 mb-4">
-              {doctor.degree} - {doctor.speciality}
-              <span className="py-0.5 px-2 border border-[#ADADAD] text-xs rounded-full">
-                {doctor.experience}
-              </span>
-            </p>
-            <p className="flex items-center gap-1">
-              About <AiOutlineExclamationCircle className="text-xs" />
-            </p>
-            <p className="text-sm text-gray-600 mt-1 mb-4">{doctor.about}</p>
-            <p className="text-gray-600 font-medium">
-              Appointment fee:
-              <span className="text-black"> ${doctor.fees}</span>
-            </p>
-          </div>
-        </section>
+        {loading && <p>Loading...</p>}
+        {!loading && doctor && (
+          <section className="info flex flex-col md:flex-row md:gap-4">
+            <div className="image">
+              <img
+                src={doctor.profile_image}
+                alt="Image"
+                className="bg-(--color-primary) rounded-2xl w-full"
+              />
+            </div>
+            <div className="details w-[98%] bg-white border border-[#ADADAD] p-8 mx-auto rounded-2xl -mt-14 md:mt-0">
+              <h2 className="text-3xl font-medium text-gray-700 flex gap-2.5">
+                {doctor.name}
+                <img src={verify} alt="Image" className="w-5" />
+              </h2>
+              <p className="text-gray-600 flex gap-2.5 mt-1 mb-4">
+                {doctor.degree} - {doctor.speciality}
+                <span className="py-0.5 px-2 border border-[#ADADAD] text-xs rounded-full">
+                  {doctor.experience}
+                </span>
+              </p>
+              <p className="flex items-center gap-1">
+                About <AiOutlineExclamationCircle className="text-xs" />
+              </p>
+              <p className="text-sm text-gray-600 mt-1 mb-4">{doctor.about}</p>
+              <p className="text-gray-600 font-medium">
+                Appointment fee:
+                <span className="text-black"> ${doctor.fees}</span>
+              </p>
+            </div>
+          </section>
+        )}
         <section className="book mt-8">
           <p className="font-medium text-[#565656]">Booking slots</p>
           <div className="time mt-4">
@@ -130,10 +147,13 @@ const DoctorPage = () => {
             Simply browse through our extensive list of trusted doctors.
           </p>
           <div className="doctors grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 gap-y-6 mt-10">
-            {DoctorsMockData.map((doc) => {
-              return doc.speciality === doctor.speciality &&
-                doc.id !== doctor.id ? (
-                <>
+            {loading && <p>Loading...</p>}
+            {!loading && filteredDoctors.length === 0 && (
+              <p>No Related Doctors</p>
+            )}
+            {!loading &&
+              filteredDoctors.map((doc) => {
+                return (
                   <div
                     key={doc.id}
                     className="group w-full flex flex-col gap-4  border border-[#C9D8FF] rounded-xl cursor-pointer hover:-translate-y-2.5 transition-[translate] duration-400 ease-in-out"
@@ -154,11 +174,8 @@ const DoctorPage = () => {
                       <p className="text-[#5C5C5C] text-sm">{doc.speciality}</p>
                     </div>
                   </div>
-                </>
-              ) : (
-                ""
-              );
-            })}
+                );
+              })}
           </div>
         </section>
       </div>

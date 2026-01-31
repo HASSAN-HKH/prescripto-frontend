@@ -1,32 +1,25 @@
 import React, { useState } from "react";
 import adminApi from "../../api/adminApi"; // because I need to ensure that the admin-token is sent with the request
 import { useEffect } from "react";
-import { DoctorsMockData } from "../../mock/DoctorsData";
+import useDoctorsStore from "../../store/doctors";
 
 const AdminDoctorsList = () => {
-  const [data, setData] = useState([]);
-  const [mockData, setMockData] = useState(DoctorsMockData);
+  const fetchDoctors = useDoctorsStore((state) => state.fetchDoctors);
+  const { doctors, loading } = useDoctorsStore();
 
   useEffect(() => {
-    const fetchDoctors = async () => {
-      try {
-        const res = await adminApi.get("/admin/doctors");
-        setData(res.data.data);
-        console.log(res.data.data);
-      } catch (error) {
-        // alert(error.response?.data?.message || "Fetch failed");
-      }
-    };
+    if (doctors.length === 0) {
+      fetchDoctors();
+    }
+  }, [doctors.length, fetchDoctors]);
 
-    fetchDoctors();
-  }, []);
   return (
     <div>
       <h2 className="mb-4 font-semibold hidden md:block">All Doctors</h2>
-      {mockData.length === 0 && <p>No doctors found</p>}
+      {loading && <p>Loading...</p>}
 
       <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 gap-y-6 px-3 sm:px-0">
-        {mockData.map((doctor) => (
+        {doctors.map((doctor) => (
           <div
             key={doctor.id}
             className="group w-full flex flex-col gap-4  border border-[#C9D8FF] rounded-xl cursor-pointer"
